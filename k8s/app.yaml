@@ -1,0 +1,36 @@
+# k8s/app.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yotify-app
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+  selector:
+    app: yotify-app
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yotify-app
+spec:
+  selector:
+    matchLabels:
+      app: yotify-app
+  template:
+    metadata:
+      labels:
+        app: yotify-app
+    spec:
+      containers:
+      - name: yotify-app
+        image: yotify-app
+        ports:
+        - containerPort: 9292
+        env:
+          - name: RACK_ENV
+            value: "development"
