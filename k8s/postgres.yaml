@@ -1,0 +1,75 @@
+# k8s/postgres.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yotify-db-configuration
+data:
+  POSTGRES_DB: "yotify_dev"
+  POSTGRES_USER: "yotify"
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: yotify-db-statefulset
+spec:
+  serviceName: "yotify-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yotify-db
+  template:
+    metadata:
+      labels:
+        app: yotify-db
+    spec:
+      containers:
+        - name: yotify-db
+          image: postgres:12
+          envFrom:
+            - configMapRef:
+                name: yotify-db-configuration
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: yotify-db-credentials
+                  key: password
+          ports:
+            - containerPort: 5432
+              name: postgresdb
+          volumeMounts:
+            - name: yotify-db-volume-mount
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - "-c"
+                - "psql -U$POSTGRES_USER -d$POSTGRES_DB -c 'SELECT 1'"
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - "-c"
+                - "psql -U$POSTGRES_USER -d$POSTGRES_DB -c 'SELECT 1'"
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+      volumes:
+        - name: yotify-db-volume-mount
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yotify-db-service
+spec:
+  ports:
+    - port: 5432
+      name: yotify-db
+  type: NodePort
+  selector:
+    app: yotify-db
