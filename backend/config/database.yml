@@ -6,6 +6,9 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: yotify-db-service
+  username: yotify
+  password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
@@ -67,5 +70,3 @@ test:
 production:
   <<: *default
   database: yotify_prod
-  username: yotify
-  password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
