@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  enabled: True
+  firtname: MyString
+  lastname: MyString
+
+two:
+  enabled: False
+  firtname: MyString
+  lastname: MyString
