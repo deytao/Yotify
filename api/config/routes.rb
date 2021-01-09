@@ -6,7 +6,4 @@ Rails.application.routes.draw do
   devise_for :users
   resources :messages
   root 'messages#index'
-  namespace :api do
-    resources :messages
-  end
 end

@@ -8,7 +8,9 @@
 
 User.create([
   {
-    firstname: "Tom",
-    lastname: "Lane",
+    firstname: "Urs",
+    lastname: "Elmer",
+    email: "urs.elmer@yova.com",
+    password: "secret",
   }
 ])

@@ -1,22 +1,23 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :doorkeeper_authorize!
   before_action :set_message, only: [:show, :update]
 
   # GET /messages
   def index
-    @messages = Message.all
+    @messages = Message.where(enabled = true)
 
     render json: @messages
   end
 
   # GET /messages/1
   def show
-    render json: @message
+    render json: @messages
   end
 
   # POST /messages
   def create
     @message = Message.new(message_params)
+    @message.user_id = current_user.id
 
     if @message.save
       render json: @message, status: :created, location: @message
@@ -43,11 +44,11 @@ class MessagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_message
-      @message = Message.find(params[:id])
+      @message = Message.where(enabled = true, id = params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def message_params
-      params.require(:message).permit(:enabled, :content, :user_id)
+      params.require(:message).permit(:enabled, :content)
     end
 end
