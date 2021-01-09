@@ -7,11 +7,9 @@ build:
     useDockerCLI: true
     push: false
   artifacts:
-    - image: yotify-app
-      context: backend
+    - image: yotify-api
+      context: api
       sync:
-        # Sync app.rb file, being watch with rack-unreloader
-        # or add any other rb file to your application 
         infer:
           - '*.rb'
 deploy:
