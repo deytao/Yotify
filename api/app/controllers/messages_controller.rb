@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_message, only: [:show, :update]
 
   # GET /messages
   def index
@@ -34,9 +35,10 @@ class MessagesController < ApplicationController
   end
 
   # DELETE /messages/1
-  def destroy
-    @message.destroy
-  end
+  # TODO: Soft-delete
+  #def destroy
+    #@message.destroy
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.
