@@ -50,6 +50,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    doorkeeper (5.4.0)
+      railties (>= 5)
     erubis (2.7.0)
     ffi (1.14.2)
     globalid (0.4.2)
@@ -134,6 +136,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   devise
+  doorkeeper
   listen (~> 3.0.5)
   pg (~> 0.18)
   puma (~> 3.0)
