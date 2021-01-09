@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  enabled: false
+  sent_at: 2021-01-10 11:13:04
+  read_at: 2021-01-10 11:13:04
+  message: one
+  customer: one
+
+two:
+  enabled: false
+  sent_at: 2021-01-10 11:13:04
+  read_at: 2021-01-10 11:13:04
+  message: two
+  customer: two

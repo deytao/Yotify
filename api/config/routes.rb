@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   end
   devise_for :users
   resources :messages
+  resources :notifications
   root 'messages#index'
 end
