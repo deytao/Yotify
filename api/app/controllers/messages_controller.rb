@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = Message.where(enabled = true)
+    @messages = Message.where(enabled: true)
 
     render json: @messages
   end
@@ -36,19 +36,18 @@ class MessagesController < ApplicationController
   end
 
   # DELETE /messages/1
-  # TODO: Soft-delete
-  #def destroy
-    #@message.destroy
-  #end
+  def destroy
+    @message.enabled = false
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_message
-      @message = Message.where(enabled = true, id = params[:id])
+      @message = Message.where(enabled: true, id: params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def message_params
-      params.require(:message).permit(:enabled, :content)
+      params.require(:message).permit(:subject, :body)
     end
 end

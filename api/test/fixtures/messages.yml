@@ -2,10 +2,12 @@
 
 one:
   enabled: false
-  content: MyString
+  subject: New Feature
+  body: Call us!
   user: one
 
 two:
   enabled: false
-  content: MyString
+  subject: Event
+  body: Visit us!
   user: two
