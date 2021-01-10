@@ -12,6 +12,14 @@ build:
       sync:
         infer:
           - '*.rb'
+    - image: yotify-ui
+      context: ui
+      sync:
+        infer:
+          - '*.erb'
+          - '*.rb'
+          - '*.vue'
+          - '*.js'
 deploy:
   kubectl:
     manifests:

@@ -1,40 +1,35 @@
-# k8s/api.yaml
+# k8s/ui.yaml
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: yotify-api
+  name: yotify-ui
 spec:
   ports:
   - port: 3000
   type: LoadBalancer
   selector:
-    app: yotify-api
+    app: yotify-ui
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yotify-api
+  name: yotify-ui
 spec:
   selector:
     matchLabels:
-      app: yotify-api
+      app: yotify-ui
   template:
     metadata:
       labels:
-        app: yotify-api
+        app: yotify-ui
     spec:
       containers:
-      - name: yotify-api
-        image: yotify-api
+      - name: yotify-ui
+        image: yotify-ui
         ports:
         - containerPort: 9292
         env:
           - name: RACK_ENV
             value: "development"
-          - name: API_DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: yotify-db-credentials
-                key: password
