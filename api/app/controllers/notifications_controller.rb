@@ -4,7 +4,13 @@ class NotificationsController < ApplicationController
 
   # GET /notifications
   def index
-    @notifications = Notification.where(enabled: true)
+    filters = {
+     enabled: true,
+    }
+    if current_user.customer
+      filters[:customer] = current_user.customer
+    end
+    @notifications = Notification.where(filters)
 
     render json: @notifications
   end
@@ -43,7 +49,14 @@ class NotificationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
-      @notification = Notification.where(enabled: true, id: params[:id])
+      filters = {
+       enabled: true,
+       id: params[:id],
+      }
+      if current_user.customer
+        filters[:customer] = current_user.customer
+      end
+      @notification = Notification.where(filters)
     end
 
     # Only allow a trusted parameter "white list" through.
