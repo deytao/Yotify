@@ -14,7 +14,7 @@ class SigninPageController < ApplicationController
     if response.status.success?
       data = JSON.parse response.body
       session[:api_access_token] = data["access_token"]
-      render plain: session[:api_access_token]
+      redirect_to "/messages/"
     else
       redirect_to "/"
     end
