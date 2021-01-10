@@ -18,13 +18,13 @@ User.create([
   {
     firstname: "Urs",
     lastname: "Elmer",
-    email: "urs.elmer@yova.com",
+    email: "urs.elmer@yova.ch",
     password: "secret",
   },
   {
     firstname: "Jean",
     lastname: "Dupond",
-    email: "jean.dupong@yova.com",
+    email: "jean.dupond@good.inc",
     password: "good!secret",
     customer: customers.first,
   },
