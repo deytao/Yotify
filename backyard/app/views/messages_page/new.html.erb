@@ -1,0 +1,17 @@
+<h1>Create message</h1>
+<div class="ui grid">
+  <div class="centered column">
+    <form class="ui form" method="POST">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="field">
+        <label>Subject</label>
+        <input type="text" name="subject" placeholder="First Name">
+      </div>
+      <div class="field">
+        <label>Body</label>
+        <textarea name="body" rows="2"></textarea>
+      </div>
+      <button class="ui button blue" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
