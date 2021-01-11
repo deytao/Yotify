@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1
   def show
-    render json: @messages
+    render json: @message.first
   end
 
   # POST /messages

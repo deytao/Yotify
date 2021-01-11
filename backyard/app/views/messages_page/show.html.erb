@@ -1,0 +1,23 @@
+<h1>Message</h1>
+<h2><%= @message["subject"] %></h2>
+<h3><%= @message["body"] %></h3>
+<a href="" class="ui button blue">Notify customers</a>
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Sent at</th>
+      <th>Read at</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @notifications.each do |notification| %>
+      <tr>
+        <td><%= notification["customer_name"] %></td>
+        <td><%= notification["created_at"] %></td>
+        <td><%= notification["read_at"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

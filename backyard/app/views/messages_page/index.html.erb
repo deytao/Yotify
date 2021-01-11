@@ -19,7 +19,7 @@
         <td><%= message["created_at"] %></td>
         <td><%= message["user_fullname"] %></td>
         <td>
-          <a href="<%= url_for controller: "messages_page", action: "create" %>" class="ui button blue mini">Details</a>
+          <a href="<%= url_for controller: "messages_page", action: "show", id: message["id"] %>" class="ui button blue mini">Details</a>
         </td>
       </tr>
     <% end %>

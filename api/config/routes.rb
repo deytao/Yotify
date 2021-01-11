@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     skip_controllers :authorizations, :applications, :authorized_applications
   end
   devise_for :users
+  get '/customers/:id', to: 'customers#show'
   get '/users/:id', to: 'user#show'
   resources :messages
   get '/messages/:id/notifications', to: 'notifications#from_message'
