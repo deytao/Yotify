@@ -15,8 +15,8 @@
     <% @notifications.each do |notification| %>
       <tr>
         <td><%= notification["customer_name"] %></td>
-        <td><%= notification["created_at"] %></td>
-        <td><%= notification["read_at"] %></td>
+        <td><%= DateTime.parse(notification["created_at"]).to_formatted_s(:short) %></td>
+        <td><%= DateTime.parse(notification["read_at"]).to_formatted_s(:short) if notification["read_at"] %></td>
       </tr>
     <% end %>
   </tbody>

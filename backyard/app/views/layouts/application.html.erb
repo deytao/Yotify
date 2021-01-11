@@ -10,13 +10,25 @@
   </head>
 
   <body>
-    <div class="ui container">
-      <% flash.each do |type, msg| %>
-        <div class="ui message huge <%= type %>">
-          <%= msg %>
+    <div class="ui grid container">
+      <div class="sixteen wide column">
+        <% flash.each do |type, msg| %>
+          <div class="ui message huge <%= type %>">
+            <%= msg %>
+          </div>
+        <% end %>
+      </div>
+      <% if session[:api_access_token] %>
+        <div class="three wide column">
+          <div class="ui vertical pointing menu">
+            <%= link_to "Messages", "/messages", class: "active item" %>
+            <%= link_to "Account", "/account", class: "item" %>
+          </div>
         </div>
       <% end %>
-      <%= yield %>
+      <div class="thirteen wide column">
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>

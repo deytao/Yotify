@@ -16,7 +16,7 @@
       <tr>
         <td><%= message["subject"] %></td>
         <td><%= message["body"] %></td>
-        <td><%= message["created_at"] %></td>
+        <td><%= DateTime.parse(message["created_at"]).to_formatted_s(:short) %></td>
         <td><%= message["user_fullname"] %></td>
         <td>
           <a href="<%= url_for controller: "messages_page", action: "show", id: message["id"] %>" class="ui button blue mini">Details</a>
