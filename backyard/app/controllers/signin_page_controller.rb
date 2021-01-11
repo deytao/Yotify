@@ -10,7 +10,8 @@ class SigninPageController < ApplicationController
       email: params[:email],
       password: params[:password],
     }
-    response = HTTP.post('http://localhost:3000/oauth/token', :json => payload)
+    url = '%soauth/token' % Rails.configuration.api_client["url"]
+    response = HTTP.post(url, :json => payload)
     if response.status.success?
       data = JSON.parse response.body
       session[:api_access_token] = data["access_token"]
