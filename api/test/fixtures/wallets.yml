@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  enabled: false
+  rate: 1.5
+  company: one
+  customer: one
+
+two:
+  enabled: false
+  rate: 1.5
+  company: two
+  customer: two
