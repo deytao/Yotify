@@ -1,0 +1,10 @@
+default: &default
+  url: <%= ENV['API_CLIENT_URL'] %>
+
+development:
+  <<: *default
+  version: v2
+
+production:
+  <<: *default
+  version: v1

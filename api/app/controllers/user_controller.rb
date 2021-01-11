@@ -2,9 +2,15 @@ class UserController < ApplicationController
   before_action :doorkeeper_authorize!
 
   # GET /users/1
+  # GET /users/current
   def show
-    @user = User.find(params[:id])
-    render json: @user
+    requested_value = params[:id]
+    if requested_value == "current"
+      render json: current_user
+    else
+      @user = User.find()
+      render json: @user
+    end
   end
 
 end
