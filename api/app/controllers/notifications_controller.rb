@@ -7,9 +7,6 @@ class NotificationsController < ApplicationController
     filters = {
      enabled: true,
     }
-    if current_user.customer
-      filters[:customer] = current_user.customer
-    end
     @notifications = Notification.where(filters)
 
     render json: @notifications
@@ -43,7 +40,29 @@ class NotificationsController < ApplicationController
 
   # DELETE /notifications/1
   def destroy
-    @message.enabled = false
+    @notification.enabled = false
+  end
+
+  # GET /messages/1/notifications
+  def from_message
+    filters = {
+     enabled: true,
+     message_id: params[:id],
+    }
+    @notifications = Notification.where(filters)
+
+    render json: @notifications
+  end
+
+  # GET /customers/1/notifications
+  def from_customer
+    filters = {
+     enabled: true,
+     customer_id: params[:id],
+    }
+    @notifications = Notification.where(filters)
+
+    render json: @notifications
   end
 
   private

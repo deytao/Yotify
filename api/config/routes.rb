@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   devise_for :users
   get '/users/:id', to: 'user#show'
   resources :messages
+  get '/messages/:id/notifications', to: 'notifications#from_message'
   resources :notifications
+  get '/customers/:id/notifications', to: 'notifications#from_customer'
   root 'messages#index'
 end
