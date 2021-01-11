@@ -1,4 +1,3 @@
-
 class MessagesPageController < ApplicationController
   def index
     response = http_auth.get('http://localhost:3000/messages')
@@ -39,18 +38,40 @@ class MessagesPageController < ApplicationController
 
   def show
     response = http_auth.get('http://localhost:3000/messages/%s' % params[:id])
-    @message = JSON.parse response.body
-    response = http_auth.get('http://localhost:3000/messages/%s/notifications' % params[:id])
-    @notifications = JSON.parse response.body
-    customers = {}
-    @notifications.each do |notification|
-      customer_id = notification.delete("customer_id")
-      unless customers.key?(customer_id)
-        response = http_auth.get('http://localhost:3000/customers/%s' % customer_id)
-        customers[customer_id] = JSON.parse response.body
+    if response.code == 401
+      redirect_to "/", info: "Session expired."
+    else
+      @message = JSON.parse response.body
+      response = http_auth.get('http://localhost:3000/customers')
+      _customers = JSON.parse response.body
+      @customers = {}
+      _customers.each do |customer|
+        @customers[customer["id"]] = customer
       end
-      customer = customers[customer_id]
-      notification["customer_name"] = customer["name"]
+      response = http_auth.get('http://localhost:3000/messages/%s/notifications' % params[:id])
+      @notifications = JSON.parse response.body
+      @notifications.each do |notification|
+        customer_id = notification.delete("customer_id")
+        unless @customers.key?(customer_id)
+          response = http_auth.get('http://localhost:3000/customers/%s' % customer_id)
+          @customers[customer_id] = JSON.parse response.body
+        end
+        customer = @customers[customer_id]
+        notification["customer_name"] = customer["name"]
+      end
     end
+  end
+
+  def notify
+    customer_ids = params[:customer_ids]
+    customer_ids.each do |customer_id|
+      payload = {
+        message_id: params[:id],
+        customer_id: customer_id,
+        sent_at: DateTime.current,
+      }
+      http_auth.post('http://localhost:3000/notifications', :json => payload)
+    end
+    redirect_to url_for(controller: "messages_page", action: "show", id: params[:id])
   end
 end

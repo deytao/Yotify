@@ -1,7 +1,7 @@
 <h1>Message</h1>
 <h2><%= @message["subject"] %></h2>
 <h3><%= @message["body"] %></h3>
-<a href="" class="ui button blue">Notify customers</a>
+<a id="notify_them" class="ui button blue">Notify customers</a>
 <table class="ui celled table">
   <thead>
     <tr>
@@ -21,3 +21,27 @@
     <% end %>
   </tbody>
 </table>
+
+<div id="notifier" class="ui large modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Notify customers
+  </div>
+  <div class="content">
+    <form id="notify_form" class="ui grid form" method="POST" action="<%= url_for controller: "messages_page", action: "notify", id: @message["id"] %>">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <% @customers.each do |customer_id, customer| %>
+        <div class="six wide column">
+          <div class="ui checkbox">
+            <input type="checkbox" name="customer_ids[]" value="<%= customer["id"] %>" />
+            <label><%= customer["name"] %></label>
+          </div>
+        </div>
+      <% end %>
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui button blue approve">OK</div>
+  </div>
+</div>

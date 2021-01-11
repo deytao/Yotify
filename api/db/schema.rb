@@ -36,11 +36,11 @@ ActiveRecord::Schema.define(version: 20210110101304) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.boolean  "enabled"
-    t.datetime "sent_at"
+    t.boolean  "enabled",    default: true, null: false
+    t.datetime "sent_at", null: false
     t.datetime "read_at"
-    t.integer  "message_id"
-    t.integer  "customer_id"
+    t.integer  "message_id", null: false
+    t.integer  "customer_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["customer_id"], name: "index_notifications_on_customer_id", using: :btree

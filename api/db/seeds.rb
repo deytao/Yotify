@@ -11,7 +11,19 @@ customers = Customer.create([
     slug: "good-inc",
     name: "Good Inc.",
     contact_email: "info@good.inc",
-    signup_date: "2021-01-04",
+    signup_date: "2020-01-04",
+  },
+  {
+    slug: "bad-inc",
+    name: "Bad Inc.",
+    contact_email: "info@bad.inc",
+    signup_date: "2020-01-08",
+  },
+  {
+    slug: "ugly-inc",
+    name: "Ugly Inc.",
+    contact_email: "info@ugly.inc",
+    signup_date: "2020-01-11",
   },
 ])
 User.create([
@@ -22,10 +34,30 @@ User.create([
     password: "secret",
   },
   {
+    firstname: "Hans",
+    lastname: "Siegler",
+    email: "hand.siegler@yova.ch",
+    password: "notsosecret",
+  },
+  {
     firstname: "Jean",
     lastname: "Dupond",
     email: "jean.dupond@good.inc",
     password: "good!secret",
     customer: customers.first,
+  },
+  {
+    firstname: "James",
+    lastname: "Lane",
+    email: "james.lane@good.inc",
+    password: "bad!secret",
+    customer: customers.second,
+  },
+  {
+    firstname: "Sacha",
+    lastname: "Nguyen",
+    email: "sacha.ngyuen@ugly.inc",
+    password: "ugly!secret",
+    customer: customers.third,
   },
 ])
