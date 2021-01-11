@@ -6,6 +6,16 @@ class MessagesPageController < ApplicationController
       redirect_to "/", info: "Session expired."
     else
       @messages = JSON.parse response.body
+      users = {}
+      @messages.each do |message|
+        user_id = message.delete("user_id")
+        unless users.key?(user_id)
+          response = http_auth.get('http://localhost:3000/users/%s' % user_id)
+          users[user_id] = JSON.parse response.body
+        end
+        user = users[user_id]
+        message["user_fullname"] = "%s %s" % [user["firstname"], user["lastname"]]
+      end
     end
   end
 
