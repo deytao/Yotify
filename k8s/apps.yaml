@@ -1,38 +1,52 @@
-# k8s/api.yaml
+# k8s/backyard.yaml
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: yotify-api
+  name: yotify-apps
 spec:
   ports:
+  - port: 5000
+    name: yotify-backyard
   - port: 3000
+    name: yotify-api
   type: LoadBalancer
   selector:
-    app: yotify-api
+    app: yotify-apps
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yotify-api
+  name: yotify-apps
 spec:
   selector:
     matchLabels:
-      app: yotify-api
+      app: yotify-apps
   template:
     metadata:
       labels:
-        app: yotify-api
+        app: yotify-apps
     spec:
       containers:
-      - name: yotify-api
-        image: yotify-api
+      - name: yotify-backyard
+        image: yotify-backyard
         ports:
-        - containerPort: 9292
+        - containerPort: 5000
         env:
           - name: RACK_ENV
             value: "development"
+          - name: API_CLIENT_URL
+            value: "http://localhost:3000/"
+      - name: yotify-api
+        image: yotify-api
+        ports:
+        - containerPort: 3000
+        env:
+          - name: RACK_ENV
+            value: "development"
+          - name: API_DATABASE_HOST
+            value: "yotify-db-service"
           - name: API_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:

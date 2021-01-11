@@ -1,4 +1,10 @@
+default: &default
+  url: <%= ENV['API_CLIENT_URL'] %>
+
 development:
-    url: 'http://localhost:3000/'
+  <<: *default
+  version: v2
+
 production:
-    url: ''
+  <<: *default
+  version: v1
