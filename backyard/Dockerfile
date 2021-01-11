@@ -7,4 +7,4 @@ RUN bundle install
 
 ADD . ./
 
-CMD ["bundle","exec","rails","server"]
+CMD ["bundle","exec","rails","server","-p","5000"]

@@ -1,33 +1,33 @@
-# k8s/ui.yaml
+# k8s/backyard.yaml
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: yotify-ui
+  name: yotify-backyard
 spec:
   ports:
-  - port: 3000
+  - port: 5000
   type: LoadBalancer
   selector:
-    app: yotify-ui
+    app: yotify-backyard
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yotify-ui
+  name: yotify-backyard
 spec:
   selector:
     matchLabels:
-      app: yotify-ui
+      app: yotify-backyard
   template:
     metadata:
       labels:
-        app: yotify-ui
+        app: yotify-backyard
     spec:
       containers:
-      - name: yotify-ui
-        image: yotify-ui
+      - name: yotify-backyard
+        image: yotify-backyard
         ports:
         - containerPort: 9292
         env:

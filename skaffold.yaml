@@ -12,8 +12,8 @@ build:
       sync:
         infer:
           - '*.rb'
-    - image: yotify-ui
-      context: ui
+    - image: yotify-backyard
+      context: backyard
       sync:
         infer:
           - '*.erb'
