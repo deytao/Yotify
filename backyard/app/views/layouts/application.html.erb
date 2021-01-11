@@ -11,6 +11,11 @@
 
   <body>
     <div class="ui container">
+      <% flash.each do |type, msg| %>
+        <div class="ui message huge <%= type %>">
+          <%= msg %>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>

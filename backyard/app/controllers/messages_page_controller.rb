@@ -2,7 +2,11 @@
 class MessagesPageController < ApplicationController
   def index
     response = http_auth.get('http://localhost:3000/messages')
-    @messages = JSON.parse response.body
+    if response.code == 401
+      redirect_to "/", info: "Session expired."
+    else
+      @messages = JSON.parse response.body
+    end
   end
 
   def new
@@ -16,8 +20,10 @@ class MessagesPageController < ApplicationController
     response = http_auth.post('http://localhost:3000/messages', :json => payload)
     if response.status.success?
       redirect_to "/messages/"
+    elsif response.code == 401
+      redirect_to "/", info: "Session expired."
     else
-      redirect_to "/messages/new", alert: "Fail to create message"
+      redirect_to "/messages/new", error: "Fail to create message"
     end
   end
 

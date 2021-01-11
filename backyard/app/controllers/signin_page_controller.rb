@@ -16,7 +16,7 @@ class SigninPageController < ApplicationController
       session[:api_access_token] = data["access_token"]
       redirect_to "/messages/"
     else
-      redirect_to "/"
+      redirect_to "/", error: "Invalid credentials"
     end
   end
 end
