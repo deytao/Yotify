@@ -34,5 +34,7 @@ module Api
 
     config.time_zone = 'Europe/Zurich'
     config.active_record.default_timezone = :local
+
+    config.x.alphavantage_token = ENV['ALPHAVANTAGE_TOKEN']
   end
 end
