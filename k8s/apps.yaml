@@ -10,6 +10,8 @@ spec:
     name: yotify-backyard
   - port: 3000
     name: yotify-api
+  - port: 5050
+    name: yotify-b2b
   type: LoadBalancer
   selector:
     app: yotify-apps
@@ -38,6 +40,20 @@ spec:
             value: "development"
           - name: API_CLIENT_URL
             value: "http://localhost:3000/"
+      - name: yotify-b2b
+        image: yotify-b2b
+        ports:
+        - containerPort: 5050
+        env:
+          - name: RACK_ENV
+            value: "development"
+          - name: API_CLIENT_URL
+            value: "http://localhost:3000/"
+          - name: ALPHAVANTAGE_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: yotify-credentials
+                key: alphavantage_token
       - name: yotify-api
         image: yotify-api
         ports:

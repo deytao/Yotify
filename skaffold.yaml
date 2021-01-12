@@ -12,13 +12,17 @@ build:
       sync:
         infer:
           - '*.rb'
+    - image: yotify-b2b
+      context: customer_api
+      sync:
+        infer:
+          - '*.rb'
     - image: yotify-backyard
       context: backyard
       sync:
         infer:
           - '*.erb'
           - '*.rb'
-          - '*.vue'
           - '*.js'
 deploy:
   kubectl:
