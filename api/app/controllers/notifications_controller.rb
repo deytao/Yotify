@@ -14,7 +14,8 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/1
   def show
-    render json: @notification
+    status = :not_found unless @notification
+    render json: @notification, status: status
   end
 
   # POST /notifications
@@ -75,7 +76,7 @@ class NotificationsController < ApplicationController
       if current_user.customer
         filters[:customer] = current_user.customer
       end
-      @notification = Notification.where(filters)
+      @notification = Notification.where(filters).first
     end
 
     # Only allow a trusted parameter "white list" through.
