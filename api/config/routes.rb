@@ -14,6 +14,6 @@ Rails.application.routes.draw do
   resources :notifications
   get '/customers/:id/notifications', to: 'notifications#from_customer'
   get '/customers/:id/portfolios', to: 'portfolios#from_customer'
-  get '/portfolios/:id/wallet', to: 'wallets#from_portfolio'
+  get '/portfolios/:id/positions', to: 'positions#from_portfolio'
   root 'messages#index'
 end

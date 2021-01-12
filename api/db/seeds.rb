@@ -122,9 +122,9 @@ User.create([
 ])
 companies.each do |company|
   portfolios.each do |portfolio|
-    Wallet.create([
+    Position.create([
       {
-        rate: 0.025,
+        weight: 0.025,
         portfolio: portfolio,
         company: company,
       }

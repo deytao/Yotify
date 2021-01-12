@@ -15,41 +15,42 @@ class PortfoliosController < ApplicationController
     response = http_auth.get(url % params[:id])
     portfolio = JSON.parse response.body
 
-    url = '%sportfolios/%%s/wallet' % Rails.configuration.api_client["url"]
+    url = '%sportfolios/%%s/positions' % Rails.configuration.api_client["url"]
     response = http_auth.get(url % params[:id])
-    wallet = JSON.parse response.body
+    positions = JSON.parse response.body
     companies = {}
-    wallet.each do |data|
-      wallet.delete("protfolio_id")
-      company_id = data.delete("company_id")
-      data["base_value"] = portfolio["amount"] * data.delete("rate")
+    positions.each do |position|
+      position.delete("protfolio_id")
+      company_id = position.delete("company_id")
       unless companies.key?(company_id)
         url = '%scompanies/%%s' % Rails.configuration.api_client["url"]
         response = http_auth.get(url % company_id)
         companies[company_id] = JSON.parse response.body
       end
       company = companies[company_id]
-      data["company"] = {
+      position["company"] = {
         name: company["name"],
         ticker: company["ticker"],
       }
     end
-    render json: wallet, status: response.status
+    render json: positions, status: response.status
   end
 
   # GET /portfolios/1/twr
   def twr
-    url = '%sportfolios/%%s/wallet' % Rails.configuration.api_client["url"]
+    url = '%sportfolios/%%s/positions' % Rails.configuration.api_client["url"]
     response = http_auth.get(url % params[:id])
-    wallet = JSON.parse response.body
+    positions = JSON.parse response.body
 
-    companies = {}
-    wallet.each do |data|
-      company_id = data.delete("company_id")
+    companies = []
+    positions.each do |position|
+      company_id = position.delete("company_id")
       unless companies.key?(company_id)
         url = '%scompanies/%%s' % Rails.configuration.api_client["url"]
         response = http_auth.get(url % company_id)
-        companies[company_id] = JSON.parse response.body
+        company = JSON.parse response.body
+        company["weight"] = position["weight"].to_f
+        companies << company
       end
     end
 
@@ -60,9 +61,6 @@ class PortfoliosController < ApplicationController
       ]
       data = JSON.parse HTTP.get(url).body.to_s
       series = data["Time Series (Daily)"]
-      unless series
-        byebug
-      end
       daily_rates_of_return = []
       ((Date.today - 30)..Date.yesterday).each do |day|
         serie = series[day.to_s]
@@ -75,8 +73,15 @@ class PortfoliosController < ApplicationController
         daily_rates_of_return << 1 + rate
       end
       company["rate_of_return"] = daily_rates_of_return.reduce(:*) - 1
+      company["weighted_return"] = company["rate_of_return"] * company["weight"]
+      sleep 12
     end
 
-      render plain: companies[1]["rate_of_return"].to_s
+    values = []
+    companies.each do |company|
+      values << company["weighted_return"]
+    end
+
+    render plain: values.reduce(:+).to_s
   end
 end

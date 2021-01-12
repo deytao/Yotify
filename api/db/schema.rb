@@ -79,6 +79,17 @@ ActiveRecord::Schema.define(version: 2021_01_11_163811) do
     t.index ["customer_id"], name: "index_portfolios_on_customer_id"
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.boolean "enabled", default: true, null: false
+    t.float "weight", default: 0.0, null: false
+    t.bigint "company_id"
+    t.bigint "portfolio_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_positions_on_company_id"
+    t.index ["portfolio_id"], name: "index_positions_on_portfolio_id"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.boolean "enabled", default: true, null: false
     t.string "firstname", null: false
@@ -96,23 +107,12 @@ ActiveRecord::Schema.define(version: 2021_01_11_163811) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "wallets", force: :cascade do |t|
-    t.boolean "enabled", default: true, null: false
-    t.float "rate", default: 0.0, null: false
-    t.bigint "company_id"
-    t.bigint "portfolio_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_wallets_on_company_id"
-    t.index ["portfolio_id"], name: "index_wallets_on_portfolio_id"
-  end
-
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "customers"
   add_foreign_key "notifications", "messages"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "portfolios", "customers"
+  add_foreign_key "positions", "companies"
+  add_foreign_key "positions", "portfolios"
   add_foreign_key "users", "customers"
-  add_foreign_key "wallets", "companies"
-  add_foreign_key "wallets", "portfolios"
 end
