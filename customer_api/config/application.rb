@@ -33,5 +33,7 @@ module CustomerApi
     config.api_only = true
 
     config.time_zone = 'Europe/Zurich'
+
+    config.x.alphavantage_token = ENV['ALPHAVANTAGE_TOKEN']
   end
 end

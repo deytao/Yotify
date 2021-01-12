@@ -13,9 +13,9 @@ class PortfoliosController < ApplicationController
      enabled: true,
      customer_id: params[:id],
     }
-    @wallet = Wallet.where(filters)
+    @portfolios = Portfolio.where(filters)
 
-    render json: @wallet
+    render json: @portfolios
   end
 
   private
