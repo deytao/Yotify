@@ -4,7 +4,6 @@
 
 * Docker
 * MiniKube
-* Vault
 * Skaffold
 
 ## To run
