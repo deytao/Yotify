@@ -66,8 +66,8 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: yotify-db-credentials
-                  key: password
+                  name: yotify-credentials
+                  key: yotify_db_password
           ports:
             - containerPort: 5432
               name: postgresdb
