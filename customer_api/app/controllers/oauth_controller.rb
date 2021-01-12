@@ -8,7 +8,8 @@ class OauthController < ApplicationController
       password: params[:password],
     }
     url = '%soauth/token' % Rails.configuration.api_client["url"]
-    data = JSON.parse HTTP.post(url, :json => payload).body
-    render json: data
+    response = HTTP.post(url, :json => payload)
+    data = JSON.parse response.body
+    render json: data, status: response.status
   end
 end
