@@ -95,7 +95,7 @@ User.create([
   {
     firstname: "Hans",
     lastname: "Siegler",
-    email: "hand.siegler@yova.ch",
+    email: "hans.siegler@yova.ch",
     password: "notsosecret",
   },
   {

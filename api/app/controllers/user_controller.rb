@@ -8,7 +8,7 @@ class UserController < ApplicationController
     if requested_value == "current"
       render json: current_user
     else
-      @user = User.find()
+      @user = User.find(requested_value)
       render json: @user
     end
   end
