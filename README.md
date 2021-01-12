@@ -35,18 +35,24 @@ $ make run
 ```
 
 The db is a bit slow to start, try the connection with `psql -U yotify yotify_dev`
+
 The internal api will be accessible on http://localhost:3000/, it can be used directly but shouldn't be public
+
 The admin interface will be accessible on http://localhost:5000/
+
 The customer API will be accessible on http://localhost:5050/
 
-You can run the task to compute the TWR from the `api` folder with `command`
+You can run the task to compute the TWR from the `api` folder with 
+```
+$ ALPHAVANTAGE_TOKEN="" API_DATABASE_PASSWORD="" API_DATABASE_HOST=localhost bin/rails portfolios:twr\[$(date +"%Y-%m-%d")\]
+```
 
 ### To dev
 
 * Ruby
 * RoR 5
 
-## Known issues
+## Known issues / Improvements
 
 ### Envs
 
@@ -59,6 +65,8 @@ You can run the task to compute the TWR from the `api` folder with `command`
     * Assets should be pre-compiled
 * Many http calls for no good reasons
 * Better api\_client
+* Switch to [Resque](https://github.com/resque/resque)
+* Look up NArray & Cumo
 
 ### Frontend
 
