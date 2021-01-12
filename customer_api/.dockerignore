@@ -1,0 +1,14 @@
+*.sw[op]
+
+/public/assets
+/node_modules
+/yarn-error.log
+
+.byebug_history
+/.bundle
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+/config/master.key

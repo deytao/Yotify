@@ -50,7 +50,6 @@ You can run the task to compute the TWR from the `api` folder with `command`
 
 ### Envs
 
-* Stop reloading on .swp files
 * Only `dev` is working
 
 ### Backend
