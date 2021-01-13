@@ -5,9 +5,9 @@
 * Docker
 * MiniKube
 * Skaffold
-* to dev:
-    * Ruby
-    * RoR 5
+* to dev and twr task:
+    * Ruby:2.7
+    * RoR:5.2.4.4
 
 ## Run
 
@@ -23,8 +23,8 @@ metadata:
   name: yotify-credentials
 type: Opaque
 data:
-  yotify_db_password: <GET_YOUR_OWN>
-  alphavantage_token: <SHARING_IS_CARING>
+  yotify_db_password: //base64 value of <GET_YOUR_OWN>`
+  alphavantage_token: //base64 value of <SHARING_IS_CARING>`
 
 ```
 
@@ -37,6 +37,12 @@ $ make run
 ```
 
 The db is a bit slow to start, check state of the pods with `kubectl get pod`
+When pods are ready:
+
+```
+$ cd api
+$ make db-init
+```
 
 ### Uages
 
@@ -52,9 +58,13 @@ http POST http://localhost:3000/oauth/token grant_type=password email=urs.elmer@
 * Signin with one of the yova user
 * You can run the task to compute the TWR from the `api` folder with 
 ```
-ALPHAVANTAGE_TOKEN="<yours>" API_DATABASE_PASSWORD="<yours>" API_DATABASE_HOST=localhost make portfolios:twr
+make portfolios-twr
 ```
-
+Unfortunately the http call fail in the container, the reason is unclear since `curl` works and doing the same call with `byebug` also.
+So you'll to do it locally with
+```
+ALPHAVANTAGE_TOKEN=<yours> API_DATABASE_PASSWORD=<yours> API_DATABASE_HOST=localhost bin/rails portfolios:twr[$(date +'%Y-%m-%d')]
+```
 
 #### Admin
 

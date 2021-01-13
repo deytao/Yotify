@@ -119,6 +119,12 @@ User.create([
     password: "ugly!secret",
     customer: customers.third,
   },
+  {
+    firstname: "Yo",
+    lastname: "Bot",
+    email: "yobot@yova.ch",
+    password: "donotuse",
+  },
 ])
 companies.each do |company|
   portfolios.each do |portfolio|

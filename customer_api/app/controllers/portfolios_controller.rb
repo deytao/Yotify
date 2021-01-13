@@ -14,9 +14,10 @@ class PortfoliosController < ApplicationController
     url = '%sportfolios/%%s' % Rails.configuration.api_client["url"]
     response = http_auth.get(url % params[:id])
     portfolio = JSON.parse response.body
+    portfolio["positions"] = []
 
     url = '%sportfolios/%%s/positions' % Rails.configuration.api_client["url"]
-    response = http_auth.get(url % params[:id])
+    response = http_auth.get(url % portfolio["id"])
     positions = JSON.parse response.body
     companies = {}
     positions.each do |position|
@@ -32,7 +33,8 @@ class PortfoliosController < ApplicationController
         name: company["name"],
         ticker: company["ticker"],
       }
+      portfolio["positions"] << position
     end
-    render json: positions, status: response.status
+    render json: portfolio, status: response.status
   end
 end

@@ -28,3 +28,7 @@ db-migrate:
 
 db-rollback:
 	kubectl exec -it $(POD) -c yotify-api rails db:rollback
+
+
+portfolios-twr:
+	kubectl exec -it $(POD) -c yotify-api rails portfolios:twr[$(shell date +"%Y-%m-%d")]
